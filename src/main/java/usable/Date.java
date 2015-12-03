@@ -11,5 +11,17 @@ public class Date {
         this.month = month;
         this.year = year;
     }
+
+	public int getDay() {
+		return day;
+	}
+
+	public int getMonth() {
+		return month;
+	}
+
+	public int getYear() {
+		return year;
+	}
     
 }

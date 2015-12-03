@@ -16,12 +16,7 @@ public class PlayersRepository {
 		playersMap = new HashMap<>();
 		
 		addPlayer(new Player("123", "Adrian", "Małolepszy", new Date(7, 11, 1994), Country.POLAND, 182, 60, Position.STRIKER));
-		
-		System.out.println();
-		System.out.println();
-		System.out.println(playersMap);
-		System.out.println();
-		System.out.println();
+		addPlayer(new Player("456", "Andrzej", "Kaczmarski", new Date(13, 10, 1994), Country.GERMANY, 190, 105, Position.DEFENDER));
 	}
 	
 	public Map<String, Player> getPlayers() {
