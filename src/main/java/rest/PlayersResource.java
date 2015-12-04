@@ -11,25 +11,25 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import model.Player;
-import repositories.PlayersRepository;
+import model.collections.PlayersCollection;
 
 @Path("/players")
 public class PlayersResource {
 
-	private PlayersRepository playersRepository = new PlayersRepository();
+	private PlayersCollection playersCollection = new PlayersCollection();
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Map<String, Player> getPlayers() {
-		return playersRepository.getPlayers();
+		return playersCollection.getPlayers();
 	}
 	
 	@Path("/{playerId}")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Player getPlayer(@PathParam("playerId") String playerId) throws Exception {
-		if(playersRepository.isPlayerExists(playerId)) {
-			return playersRepository.getPlayer(playerId);
+		if(playersCollection.isPlayerExists(playerId)) {
+			return playersCollection.getPlayer(playerId);
 		}
 		throw new Exception("użytkownik o podanym ID nie istnieje");
 	}
@@ -37,8 +37,8 @@ public class PlayersResource {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void postPlayer(Player player) {
-		if(playersRepository.isPlayerExists(player.getId())) {
-			playersRepository.addPlayer(player);
+		if(playersCollection.isPlayerExists(player.getId())) {
+			playersCollection.addPlayer(player);
 		}
 	}
 	

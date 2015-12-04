@@ -1,15 +1,15 @@
-package repositories;
+package model.collections;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import model.Club;
 
-public class ClubsRepository {
+public class ClubsCollection {
 
 	private Map<String, Club> clubsMap;
 	
-	public ClubsRepository() {
+	public ClubsCollection() {
 		clubsMap = new HashMap<>();
 	}
 	

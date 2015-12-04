@@ -1,15 +1,15 @@
-package repositories;
+package model.collections;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import model.Coach;
 
-public class CoachesRepository {
+public class CoachesCollection {
 
 	private Map<String, Coach> coachesMap;
 	
-	public CoachesRepository() {
+	public CoachesCollection() {
 		coachesMap = new HashMap<>();
 	}
 	

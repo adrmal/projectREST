@@ -1,4 +1,4 @@
-package repositories;
+package model.collections;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -8,11 +8,11 @@ import usable.Country;
 import usable.Date;
 import usable.Position;
 
-public class PlayersRepository {
+public class PlayersCollection {
 
 	private Map<String, Player> playersMap;
 	
-	public PlayersRepository() {
+	public PlayersCollection() {
 		playersMap = new HashMap<>();
 		
 		addPlayer(new Player("123", "Adrian", "Małolepszy", new Date(7, 11, 1994), Country.POLAND, 182, 60, Position.STRIKER));
