@@ -9,6 +9,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -46,11 +47,12 @@ public class PlayersResource {
 		return Response.status(Response.Status.CONFLICT).entity("użytkownik o podanym ID już istnieje").build();
 	}
 	
+	@Path("/{playerId}")
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response putPlayerFirstName(String playerId, String playerFirstName) {
+	public Response putPlayerFirstName(@PathParam("playerId") String playerId, @QueryParam("firstName")  String playerFirstName) {
 		if(playersCollection.isPlayerExists(playerId)) {
-			// TODO modyfikacja imienia
+			playersCollection.getPlayer(playerId).setFirstName(playerFirstName);
 			return Response.status(Response.Status.CREATED).entity(playerId).build();
 		}
 		return Response.status(Response.Status.CONFLICT).entity("użytkownik o podanym ID nie istnieje").build();
