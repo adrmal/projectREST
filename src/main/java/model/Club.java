@@ -7,6 +7,9 @@ public class Club {
     private String city;
     private int foundingYear;
     
+    public Club() {
+    }
+    
     public Club(String id, String name, String city, int foundingYear) {
 		this.id = id;
 		this.name = name;

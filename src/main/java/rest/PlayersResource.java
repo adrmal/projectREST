@@ -1,7 +1,5 @@
 package rest;
 
-import java.util.Map;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -9,7 +7,6 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -19,12 +16,12 @@ import model.collections.PlayersCollection;
 @Path("/players")
 public class PlayersResource {
 
-	private PlayersCollection playersCollection = new PlayersCollection();
+	private static PlayersCollection playersCollection = new PlayersCollection();
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Map<String, Player> getPlayers() {
-		return playersCollection.getPlayers();
+	public Response getPlayers() {
+		return Response.status(Response.Status.OK).entity(playersCollection.getPlayers()).build();
 	}
 	
 	@Path("/{playerId}")
@@ -50,12 +47,14 @@ public class PlayersResource {
 	@Path("/{playerId}")
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response putPlayerFirstName(@PathParam("playerId") String playerId, @QueryParam("firstName")  String playerFirstName) {
+	public Response putPlayerFirstName(@PathParam("playerId") String playerId, String playerFirstName) {
 		if(playersCollection.isPlayerExists(playerId)) {
 			playersCollection.getPlayer(playerId).setFirstName(playerFirstName);
 			return Response.status(Response.Status.CREATED).entity(playerId).build();
 		}
 		return Response.status(Response.Status.CONFLICT).entity("użytkownik o podanym ID nie istnieje").build();
 	}
+	
+	//TODO @DELETE
 	
 }

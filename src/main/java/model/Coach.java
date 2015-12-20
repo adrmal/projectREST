@@ -12,6 +12,9 @@ public class Coach {
     private Country nationality;
     private Club club;
     
+    public Coach() {
+    }
+    
 	public Coach(String id, String firstName, String lastName, Date dateOfBirth, Country nationality) {
 		this.id = id;
 		this.firstName = firstName;

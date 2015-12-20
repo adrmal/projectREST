@@ -13,7 +13,7 @@ import model.collections.ClubsCollection;
 @Path("/clubs")
 public class ClubsResource {
 
-    private ClubsCollection clubsCollection = new ClubsCollection();
+    private static ClubsCollection clubsCollection = new ClubsCollection();
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)

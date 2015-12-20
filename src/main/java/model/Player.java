@@ -17,6 +17,9 @@ public class Player {
     private Club club;
     private int squadNumber;
     
+    public Player() {
+    }
+    
     public Player(String id, String firstName, String lastName, Date dateOfBirth, Country nationality, int height, int weight, Position position) {
         this.id = id;
         this.firstName = firstName;
