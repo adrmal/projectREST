@@ -25,6 +25,14 @@ public class ClubsCollection {
 		clubsMap.put(club.getId(), club);
 	}
 	
+	public void modifyClub(String clubId, Club club) {
+		clubsMap.put(clubId, club);
+	}
+	
+	public void removeClub(String clubId) {
+		clubsMap.remove(clubId);
+	}
+	
 	public boolean isClubExists(String clubId) {
 		if(clubsMap.containsKey(clubId)) {
 			return true;

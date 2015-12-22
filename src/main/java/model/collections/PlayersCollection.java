@@ -31,6 +31,14 @@ public class PlayersCollection {
 		playersMap.put(player.getId(), player);
 	}
 	
+	public void modifyPlayer(String playerId, Player player) {
+		playersMap.put(playerId, player);
+	}
+	
+	public void removePlayer(String playerId) {
+		playersMap.remove(playerId);
+	}
+	
 	public boolean isPlayerExists(String playerId) {
 		if(playersMap.containsKey(playerId)) {
 			return true;

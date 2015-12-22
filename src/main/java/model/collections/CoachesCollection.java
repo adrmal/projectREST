@@ -25,6 +25,14 @@ public class CoachesCollection {
 		coachesMap.put(coach.getId(), coach);
 	}
 	
+	public void modifyCoach(String coachId, Coach coach) {
+		coachesMap.put(coachId, coach);
+	}
+	
+	public void removeCoach(String coachId) {
+		coachesMap.remove(coachId);
+	}
+	
 	public boolean isCoachExists(String coachId) {
 		if(coachesMap.containsKey(coachId)) {
 			return true;

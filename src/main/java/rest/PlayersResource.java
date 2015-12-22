@@ -1,6 +1,7 @@
 package rest;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -36,10 +37,11 @@ public class PlayersResource {
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response postPlayer(Player player) {
 		if(!playersCollection.isPlayerExists(player.getId())) {
 			playersCollection.addPlayer(player);
-			return Response.status(Response.Status.CREATED).entity(player.getId()).build();
+			return Response.status(Response.Status.CREATED).entity(player).build();
 		}
 		return Response.status(Response.Status.CONFLICT).entity("użytkownik o podanym ID już istnieje").build();
 	}
@@ -47,14 +49,23 @@ public class PlayersResource {
 	@Path("/{playerId}")
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response putPlayerFirstName(@PathParam("playerId") String playerId, String playerFirstName) {
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response putPlayer(@PathParam("playerId") String playerId, Player player) {
 		if(playersCollection.isPlayerExists(playerId)) {
-			playersCollection.getPlayer(playerId).setFirstName(playerFirstName);
-			return Response.status(Response.Status.CREATED).entity(playerId).build();
+			playersCollection.modifyPlayer(playerId, player);
+			return Response.status(Response.Status.CREATED).entity(player).build();
 		}
 		return Response.status(Response.Status.CONFLICT).entity("użytkownik o podanym ID nie istnieje").build();
 	}
 	
-	//TODO @DELETE
+	@Path("/{playerId}")
+	@DELETE
+	public Response deletePlayer(@PathParam("playerId") String playerId) {
+		if(playersCollection.isPlayerExists(playerId)) {
+			playersCollection.removePlayer(playerId);
+			return Response.status(Response.Status.NO_CONTENT).build();
+		}
+		return Response.status(Response.Status.CONFLICT).entity("użytkownik o podanym ID nie istnieje").build();
+	}
 	
 }
