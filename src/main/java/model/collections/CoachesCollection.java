@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import model.Coach;
+import usable.Country;
+import usable.Date;
 
 public class CoachesCollection {
 
@@ -11,6 +13,8 @@ public class CoachesCollection {
 	
 	public CoachesCollection() {
 		coachesMap = new HashMap<>();
+		
+		addCoach(new Coach("123", "Jose", "Mourinho", new Date(13, 10, 1994), Country.PORTUGAL));
 	}
 	
 	public Map<String, Coach> getCoaches() {

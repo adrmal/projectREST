@@ -19,6 +19,10 @@ public class PlayersResource {
 
 	private static PlayersCollection playersCollection = new PlayersCollection();
 	
+	public static PlayersCollection getPlayersCollection() {
+	    return playersCollection;
+	}
+	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getPlayers() {
@@ -28,11 +32,11 @@ public class PlayersResource {
 	@Path("/{playerId}")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getPlayer(@PathParam("playerId") String playerId) throws Exception {
+	public Response getPlayer(@PathParam("playerId") String playerId) {
 		if(playersCollection.isPlayerExists(playerId)) {
 			return Response.status(Response.Status.OK).entity(playersCollection.getPlayer(playerId)).build();
 		}
-		return Response.status(Response.Status.CONFLICT).entity("użytkownik o podanym ID nie istnieje").build();
+		return Response.status(Response.Status.CONFLICT).entity("zawodnik o podanym ID nie istnieje").build();
 	}
 	
 	@POST
@@ -43,7 +47,7 @@ public class PlayersResource {
 			playersCollection.addPlayer(player);
 			return Response.status(Response.Status.CREATED).entity(player).build();
 		}
-		return Response.status(Response.Status.CONFLICT).entity("użytkownik o podanym ID już istnieje").build();
+		return Response.status(Response.Status.CONFLICT).entity("zawodnik o podanym ID już istnieje").build();
 	}
 	
 	@Path("/{playerId}")
@@ -55,7 +59,7 @@ public class PlayersResource {
 			playersCollection.modifyPlayer(playerId, player);
 			return Response.status(Response.Status.CREATED).entity(player).build();
 		}
-		return Response.status(Response.Status.CONFLICT).entity("użytkownik o podanym ID nie istnieje").build();
+		return Response.status(Response.Status.CONFLICT).entity("zawodnik o podanym ID nie istnieje").build();
 	}
 	
 	@Path("/{playerId}")
@@ -65,7 +69,7 @@ public class PlayersResource {
 			playersCollection.removePlayer(playerId);
 			return Response.status(Response.Status.NO_CONTENT).build();
 		}
-		return Response.status(Response.Status.CONFLICT).entity("użytkownik o podanym ID nie istnieje").build();
+		return Response.status(Response.Status.CONFLICT).entity("zawodnik o podanym ID nie istnieje").build();
 	}
 	
 }

@@ -6,6 +6,7 @@ public class Club {
     private String name;
     private String city;
     private int foundingYear;
+    private String coach;
     
     public Club() {
     }
@@ -17,6 +18,11 @@ public class Club {
 		this.foundingYear = foundingYear;
 	}
 
+    public Club(String id, String name, String city, int foundingYear, String coach) {
+        this(id, name, city, foundingYear);
+        this.coach = coach;
+    }
+    
     public String getId() {
 		return id;
 	}
@@ -45,4 +51,12 @@ public class Club {
 		this.foundingYear = foundingYear;
 	}
     
+	public String getCoach() {
+	    return coach;
+	}
+	
+	public void setCoach(String coach) {
+	    this.coach = coach;
+	}
+	
 }

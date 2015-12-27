@@ -11,6 +11,8 @@ public class ClubsCollection {
 	
 	public ClubsCollection() {
 		clubsMap = new HashMap<>();
+		
+		addClub(new Club("123", "Real", "Madryt", 1902));
 	}
 	
 	public Map<String, Club> getClubs() {

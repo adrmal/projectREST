@@ -14,7 +14,7 @@ public class Player {
     private int height;
     private int weight;
     private Position position;
-    private Club club;
+    private String club;
     private int squadNumber;
     
     public Player() {
@@ -31,7 +31,7 @@ public class Player {
         this.position = position;
     }
     
-    public Player(String id, String firstName, String lastName, Date dateOfBirth, Country nationality, int height, int weight, Position position, Club club, int squadNumber) {
+    public Player(String id, String firstName, String lastName, Date dateOfBirth, Country nationality, int height, int weight, Position position, String club, int squadNumber) {
         this(id, firstName, lastName, dateOfBirth, nationality, height, weight, position);
         this.club = club;
         this.squadNumber = squadNumber;
@@ -97,11 +97,11 @@ public class Player {
 		this.position = position;
 	}
 
-	public Club getClub() {
+	public String getClub() {
 		return club;
 	}
 
-	public void setClub(Club club) {
+	public void setClub(String club) {
 		this.club = club;
 	}
 

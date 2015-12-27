@@ -10,7 +10,6 @@ public class Coach {
     private String lastName;
     private Date dateOfBirth;
     private Country nationality;
-    private Club club;
     
     public Coach() {
     }
@@ -22,12 +21,7 @@ public class Coach {
 		this.dateOfBirth = dateOfBirth;
 		this.nationality = nationality;
 	}
-    
-	public Coach(String id, String firstName, String lastName, Date dateOfBirth, Country nationality, Club club) {
-		this(id, firstName, lastName, dateOfBirth, nationality);
-		this.club = club;
-	}
-
+	
 	public String getId() {
 		return id;
 	}
@@ -62,14 +56,6 @@ public class Coach {
 
 	public void setNationality(Country nationality) {
 		this.nationality = nationality;
-	}
-
-	public Club getClub() {
-		return club;
-	}
-
-	public void setClub(Club club) {
-		this.club = club;
 	}
 	
 }
