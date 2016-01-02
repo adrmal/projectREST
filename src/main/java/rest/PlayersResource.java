@@ -11,10 +11,15 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.ApiResponse;
 import model.Player;
 import model.collections.PlayersCollection;
 
 @Path("/players")
+@Api(value="/players")
 public class PlayersResource {
 
 	private static PlayersCollection playersCollection = new PlayersCollection();
@@ -24,6 +29,8 @@ public class PlayersResource {
 	}
 	
 	@GET
+	@ApiOperation(value = "all players")
+	@ApiResponses(value = @ApiResponse(code = 200, message = "founded whole list of players"))
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getPlayers() {
 		return Response.status(Response.Status.OK).entity(playersCollection.getPlayers()).build();
