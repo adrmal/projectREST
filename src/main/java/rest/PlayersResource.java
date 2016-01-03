@@ -13,6 +13,7 @@ import javax.ws.rs.core.Response;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.annotations.ApiResponse;
 import model.Player;
@@ -20,6 +21,8 @@ import model.collections.PlayersCollection;
 
 @Path("/players")
 @Api(value="/players")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 public class PlayersResource {
 
 	private static PlayersCollection playersCollection = new PlayersCollection();
@@ -29,8 +32,8 @@ public class PlayersResource {
 	}
 	
 	@GET
-	@ApiOperation(value = "all players")
-	@ApiResponses(value = @ApiResponse(code = 200, message = "founded whole list of players"))
+	@ApiOperation(value = "shows all list of players")
+	@ApiResponses(value = @ApiResponse(code = 200, message = "found whole list of players"))
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getPlayers() {
 		return Response.status(Response.Status.OK).entity(playersCollection.getPlayers()).build();
@@ -38,8 +41,13 @@ public class PlayersResource {
 	
 	@Path("/{playerId}")
 	@GET
+	@ApiOperation(value = "shows player with given ID")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "player with given ID exists"),
+			@ApiResponse(code = 409, message = "player with given ID doesn't exist")
+	})
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getPlayer(@PathParam("playerId") String playerId) {
+	public Response getPlayer(@ApiParam(value = "ID of player", required = true) @PathParam("playerId") String playerId) {
 		if(playersCollection.isPlayerExists(playerId)) {
 			return Response.status(Response.Status.OK).entity(playersCollection.getPlayer(playerId)).build();
 		}
@@ -47,9 +55,14 @@ public class PlayersResource {
 	}
 	
 	@POST
+	@ApiOperation(value = "adds player to list")
+	@ApiResponses(value = {
+			@ApiResponse(code = 201, message = "player added to list"),
+			@ApiResponse(code = 409, message = "player with given ID already exists, nothing has been done")
+	})
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response postPlayer(Player player) {
+	public Response postPlayer(@ApiParam(value = "player") Player player) {
 		if(!playersCollection.isPlayerExists(player.getId())) {
 			playersCollection.addPlayer(player);
 			return Response.status(Response.Status.CREATED).entity(player).build();
@@ -59,9 +72,14 @@ public class PlayersResource {
 	
 	@Path("/{playerId}")
 	@PUT
+	@ApiOperation(value = "changes player with given ID")
+	@ApiResponses(value = {
+			@ApiResponse(code = 201, message = "player changed"),
+			@ApiResponse(code = 409, message = "player with given ID doesn't exist")
+	})
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response putPlayer(@PathParam("playerId") String playerId, Player player) {
+	public Response putPlayer(@ApiParam(value = "ID of player", required = true) @PathParam("playerId") String playerId, @ApiParam(value = "player") Player player) {
 		if(playersCollection.isPlayerExists(playerId)) {
 			playersCollection.modifyPlayer(playerId, player);
 			return Response.status(Response.Status.CREATED).entity(player).build();
@@ -71,7 +89,12 @@ public class PlayersResource {
 	
 	@Path("/{playerId}")
 	@DELETE
-	public Response deletePlayer(@PathParam("playerId") String playerId) {
+	@ApiOperation(value = "deletes player with given ID from list")
+	@ApiResponses(value = {
+			@ApiResponse(code = 204, message = "player deleted"),
+			@ApiResponse(code = 409, message = "player with given ID doesn't exist")
+	})
+	public Response deletePlayer(@ApiParam(value = "ID of player", required = true) @PathParam("playerId") String playerId) {
 		if(playersCollection.isPlayerExists(playerId)) {
 			playersCollection.removePlayer(playerId);
 			return Response.status(Response.Status.NO_CONTENT).build();

@@ -1,5 +1,9 @@
 package model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+@ApiModel(value = "football club")
 public class Club {
 
 	private String id;
@@ -23,10 +27,12 @@ public class Club {
         this.coach = coach;
     }
     
+    @ApiModelProperty(value = "ID of club", required = true)
     public String getId() {
 		return id;
 	}
     
+    @ApiModelProperty(value = "name of club", required = true)
 	public String getName() {
 		return name;
 	}
@@ -35,6 +41,7 @@ public class Club {
 		this.name = name;
 	}
 
+	@ApiModelProperty(value = "city in which is club", required = true)
 	public String getCity() {
 		return city;
 	}
@@ -43,6 +50,7 @@ public class Club {
 		this.city = city;
 	}
 
+	@ApiModelProperty(value = "year of founding club", required = true)
 	public int getFoundingYear() {
 		return foundingYear;
 	}
@@ -51,6 +59,7 @@ public class Club {
 		this.foundingYear = foundingYear;
 	}
     
+	@ApiModelProperty(value = "coach of club", required = false)
 	public String getCoach() {
 	    return coach;
 	}

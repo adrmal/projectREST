@@ -1,8 +1,11 @@
 package model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import usable.Country;
 import usable.Date;
 
+@ApiModel(value = "coach of the team")
 public class Coach {
 
     private String id;
@@ -22,10 +25,12 @@ public class Coach {
 		this.nationality = nationality;
 	}
 	
+	@ApiModelProperty(value = "ID of coach", required = true)
 	public String getId() {
 		return id;
 	}
 	
+	@ApiModelProperty(value = "first name of coach", required = true)
 	public String getFirstName() {
 		return firstName;
 	}
@@ -34,6 +39,7 @@ public class Coach {
 		this.firstName = firstName;
 	}
 
+	@ApiModelProperty(value = "last name of coach", required = true)
 	public String getLastName() {
 		return lastName;
 	}
@@ -42,6 +48,7 @@ public class Coach {
 		this.lastName = lastName;
 	}
 
+	@ApiModelProperty(value = "date of birth of coach", required = true)
 	public Date getDateOfBirth() {
 		return dateOfBirth;
 	}
@@ -50,6 +57,7 @@ public class Coach {
 		this.dateOfBirth = dateOfBirth;
 	}
 
+	@ApiModelProperty(value = "nationality of coach", required = true)
 	public Country getNationality() {
 		return nationality;
 	}

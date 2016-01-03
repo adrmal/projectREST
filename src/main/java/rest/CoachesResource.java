@@ -11,15 +11,25 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import model.Coach;
 import model.collections.CoachesCollection;
 
 @Path("/coaches")
+@Api(value="/coaches")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 public class CoachesResource {
 
     private static CoachesCollection coachesCollection = new CoachesCollection();
     
     @GET
+    @ApiOperation(value = "shows all list of coaches")
+	@ApiResponses(value = @ApiResponse(code = 200, message = "found whole list of coaches"))
     @Produces(MediaType.APPLICATION_JSON)
     public Response getCoaches() {
         return Response.status(Response.Status.OK).entity(coachesCollection.getCoaches()).build();
@@ -27,8 +37,13 @@ public class CoachesResource {
     
     @Path("/{coachId}")
     @GET
+    @ApiOperation(value = "shows coach with given ID")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "coach with given ID exists"),
+			@ApiResponse(code = 409, message = "coach with given ID doesn't exist")
+	})
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getCoach(@PathParam("coachId") String coachId) {
+    public Response getCoach(@ApiParam(value = "ID of coach", required = true) @PathParam("coachId") String coachId) {
         if(coachesCollection.isCoachExists(coachId)) {
             return Response.status(Response.Status.OK).entity(coachesCollection.getCoach(coachId)).build();
         }
@@ -36,9 +51,14 @@ public class CoachesResource {
     }
     
     @POST
+    @ApiOperation(value = "adds coach to list")
+	@ApiResponses(value = {
+			@ApiResponse(code = 201, message = "coach added to list"),
+			@ApiResponse(code = 409, message = "coach with given ID already exists, nothing has been done")
+	})
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response postCoach(Coach coach) {
+    public Response postCoach(@ApiParam(value = "coach") Coach coach) {
         if(!coachesCollection.isCoachExists(coach.getId())) {
             coachesCollection.addCoach(coach);
             return Response.status(Response.Status.CREATED).entity(coach).build();
@@ -48,9 +68,14 @@ public class CoachesResource {
     
     @Path("/{coachId}")
     @PUT
+    @ApiOperation(value = "changes coach with given ID")
+	@ApiResponses(value = {
+			@ApiResponse(code = 201, message = "coach changed"),
+			@ApiResponse(code = 409, message = "coach with given ID doesn't exist")
+	})
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response putCoach(@PathParam("coachId") String coachId, Coach coach) {
+    public Response putCoach(@ApiParam(value = "ID of coach", required = true) @PathParam("coachId") String coachId, Coach coach) {
         if(coachesCollection.isCoachExists(coachId)) {
             coachesCollection.modifyCoach(coachId, coach);
             return Response.status(Response.Status.CREATED).entity(coach).build();
@@ -60,7 +85,12 @@ public class CoachesResource {
     
     @Path("/{coachId}")
     @DELETE
-    public Response deleteCoach(@PathParam("coachId") String coachId) {
+    @ApiOperation(value = "deletes coach with given ID from list")
+	@ApiResponses(value = {
+			@ApiResponse(code = 204, message = "coach deleted"),
+			@ApiResponse(code = 409, message = "coach with given ID doesn't exist")
+	})
+    public Response deleteCoach(@ApiParam(value = "ID of coach", required = true) @PathParam("coachId") String coachId) {
         if(coachesCollection.isCoachExists(coachId)) {
             coachesCollection.removeCoach(coachId);
             return Response.status(Response.Status.NO_CONTENT).build();

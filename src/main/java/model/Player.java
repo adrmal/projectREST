@@ -1,9 +1,12 @@
 package model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import usable.Country;
 import usable.Date;
 import usable.Position;
 
+@ApiModel(value = "football player")
 public class Player {
 
 	private String id;
@@ -37,10 +40,12 @@ public class Player {
         this.squadNumber = squadNumber;
     }
 	
+    @ApiModelProperty(value = "ID of player", required = true)
     public String getId() {
 		return id;
 	}
     
+    @ApiModelProperty(value = "first name of player", required = true)
     public String getFirstName() {
 		return firstName;
 	}
@@ -49,6 +54,7 @@ public class Player {
 		this.firstName = firstName;
 	}
 
+	@ApiModelProperty(value = "last name of player", required = true)
 	public String getLastName() {
 		return lastName;
 	}
@@ -57,6 +63,7 @@ public class Player {
 		this.lastName = lastName;
 	}
 
+	@ApiModelProperty(value = "date of birth of player", required = true)
 	public Date getDateOfBirth() {
 		return dateOfBirth;
 	}
@@ -65,6 +72,7 @@ public class Player {
 		this.dateOfBirth = dateOfBirth;
 	}
 
+	@ApiModelProperty(value = "nationality of player", required = true)
 	public Country getNationality() {
 		return nationality;
 	}
@@ -73,6 +81,7 @@ public class Player {
 		this.nationality = nationality;
 	}
 
+	@ApiModelProperty(value = "height in cm of player", required = true)
 	public int getHeight() {
 		return height;
 	}
@@ -81,6 +90,7 @@ public class Player {
 		this.height = height;
 	}
 
+	@ApiModelProperty(value = "weight in kg of player", required = true)
 	public int getWeight() {
 		return weight;
 	}
@@ -89,6 +99,7 @@ public class Player {
 		this.weight = weight;
 	}
 
+	@ApiModelProperty(value = "pitch position of player", required = true)
 	public Position getPosition() {
 		return position;
 	}
@@ -97,6 +108,7 @@ public class Player {
 		this.position = position;
 	}
 
+	@ApiModelProperty(value = "club in which is player", required = false)
 	public String getClub() {
 		return club;
 	}
@@ -105,6 +117,7 @@ public class Player {
 		this.club = club;
 	}
 
+	@ApiModelProperty(value = "squad number of player", required = false)
 	public int getSquadNumber() {
 		return squadNumber;
 	}
