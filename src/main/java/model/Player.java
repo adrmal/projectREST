@@ -1,5 +1,9 @@
 package model;
 
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotBlank;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import usable.Country;
@@ -9,13 +13,21 @@ import usable.Position;
 @ApiModel(value = "football player")
 public class Player {
 
+	@NotBlank
 	private String id;
+	@NotNull
     private String firstName;
+	@NotNull
     private String lastName;
+	@NotBlank
     private Date dateOfBirth;
+	@NotBlank
     private Country nationality;
+	@NotBlank
     private int height;
+	@NotBlank
     private int weight;
+	@NotNull
     private Position position;
     private String club;
     private int squadNumber;
