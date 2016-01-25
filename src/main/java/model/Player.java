@@ -15,17 +15,17 @@ public class Player {
 
 	@NotBlank
 	private String id;
-	@NotNull
+	@NotBlank
     private String firstName;
-	@NotNull
+	@NotBlank
     private String lastName;
-	@NotBlank
+	@NotNull
     private Date dateOfBirth;
-	@NotBlank
+	@NotNull
     private Country nationality;
-	@NotBlank
+	@NotNull
     private int height;
-	@NotBlank
+	@NotNull
     private int weight;
 	@NotNull
     private Position position;

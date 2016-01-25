@@ -1,6 +1,8 @@
 package rest;
 
+import javax.validation.Valid;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -9,6 +11,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -42,7 +46,7 @@ public class ClubsResource {
 			@ApiResponse(code = 409, message = "club with given ID doesn't exist")
 	})
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getClub(@ApiParam(value = "ID of club", required = true) @PathParam("clubId") String clubId) {
+    public Response getClub(@ApiParam(value = "ID of club", required = true) @PathParam("clubId") @NotBlank String clubId) {
         if(clubsCollection.isClubExists(clubId)) {
             return Response.status(Response.Status.OK).entity(clubsCollection.getClub(clubId)).build();
         }
@@ -57,7 +61,7 @@ public class ClubsResource {
 			@ApiResponse(code = 409, message = "club with given ID doesn't exist")
 	})
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getClubPlayers(@ApiParam(value = "ID of club", required = true) @PathParam("clubId") String clubId) {
+    public Response getClubPlayers(@ApiParam(value = "ID of club", required = true) @PathParam("clubId") @NotBlank String clubId) {
         if(clubsCollection.isClubExists(clubId)) {
             return Response.status(Response.Status.OK).entity(PlayersResource.getPlayersCollection().getPlayersByClub(clubId)).build();
         }
@@ -72,7 +76,7 @@ public class ClubsResource {
 	})
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response postClub(@ApiParam(value = "club") Club club) {
+    public Response postClub(@ApiParam(value = "club") @Valid Club club) {
         if(!clubsCollection.isClubExists(club.getId())) {
             clubsCollection.addClub(club);
             return Response.status(Response.Status.CREATED).entity(club).build();
@@ -89,10 +93,25 @@ public class ClubsResource {
 	})
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response putClub(@ApiParam(value = "ID of club", required = true) @PathParam("clubId") String clubId, Club club) {
+    public Response putClub(@ApiParam(value = "ID of club", required = true) @PathParam("clubId") @NotBlank String clubId, @Valid Club club) {
         if(clubsCollection.isClubExists(clubId)) {
             clubsCollection.modifyClub(clubId, club);
             return Response.status(Response.Status.CREATED).entity(club).build();
+        }
+        return Response.status(Response.Status.CONFLICT).entity("klub o podanym ID nie istnieje").build();
+    }
+    
+    @Path("/{clubId}")
+    @DELETE
+    @ApiOperation(value = "deletes club with given ID from list")
+    @ApiResponses(value = {
+            @ApiResponse(code = 204, message = "club deleted"),
+            @ApiResponse(code = 409, message = "club with given ID doesn't exist")
+    })
+    public Response deleteClub(@ApiParam(value = "ID of club", required = true) @PathParam("clubId") @NotBlank String clubId) {
+        if(clubsCollection.isClubExists(clubId)) {
+            clubsCollection.removeClub(clubId);
+            return Response.status(Response.Status.NO_CONTENT).build();
         }
         return Response.status(Response.Status.CONFLICT).entity("klub o podanym ID nie istnieje").build();
     }

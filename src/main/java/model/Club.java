@@ -1,14 +1,22 @@
 package model;
 
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotBlank;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 @ApiModel(value = "football club")
 public class Club {
 
+    @NotBlank
 	private String id;
+    @NotBlank
     private String name;
+    @NotBlank
     private String city;
+    @NotNull
     private int foundingYear;
     private String coach;
     

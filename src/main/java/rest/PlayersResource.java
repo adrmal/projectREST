@@ -1,5 +1,6 @@
 package rest;
 
+import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -10,6 +11,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -47,7 +50,7 @@ public class PlayersResource {
 			@ApiResponse(code = 409, message = "player with given ID doesn't exist")
 	})
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getPlayer(@ApiParam(value = "ID of player", required = true) @PathParam("playerId") String playerId) {
+	public Response getPlayer(@ApiParam(value = "ID of player", required = true) @PathParam("playerId") @NotBlank String playerId) {
 		if(playersCollection.isPlayerExists(playerId)) {
 			return Response.status(Response.Status.OK).entity(playersCollection.getPlayer(playerId)).build();
 		}
@@ -62,7 +65,7 @@ public class PlayersResource {
 	})
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response postPlayer(@ApiParam(value = "player") Player player) {
+	public Response postPlayer(@ApiParam(value = "player") @Valid Player player) {
 		if(!playersCollection.isPlayerExists(player.getId())) {
 			playersCollection.addPlayer(player);
 			return Response.status(Response.Status.CREATED).entity(player).build();
@@ -79,7 +82,7 @@ public class PlayersResource {
 	})
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response putPlayer(@ApiParam(value = "ID of player", required = true) @PathParam("playerId") String playerId, @ApiParam(value = "player") Player player) {
+	public Response putPlayer(@ApiParam(value = "ID of player", required = true) @PathParam("playerId") @NotBlank String playerId, @ApiParam(value = "player") @Valid Player player) {
 		if(playersCollection.isPlayerExists(playerId)) {
 			playersCollection.modifyPlayer(playerId, player);
 			return Response.status(Response.Status.CREATED).entity(player).build();
@@ -94,7 +97,7 @@ public class PlayersResource {
 			@ApiResponse(code = 204, message = "player deleted"),
 			@ApiResponse(code = 409, message = "player with given ID doesn't exist")
 	})
-	public Response deletePlayer(@ApiParam(value = "ID of player", required = true) @PathParam("playerId") String playerId) {
+	public Response deletePlayer(@ApiParam(value = "ID of player", required = true) @PathParam("playerId") @NotBlank String playerId) {
 		if(playersCollection.isPlayerExists(playerId)) {
 			playersCollection.removePlayer(playerId);
 			return Response.status(Response.Status.NO_CONTENT).build();

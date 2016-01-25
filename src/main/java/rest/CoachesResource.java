@@ -1,5 +1,6 @@
 package rest;
 
+import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -10,6 +11,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -43,7 +46,7 @@ public class CoachesResource {
 			@ApiResponse(code = 409, message = "coach with given ID doesn't exist")
 	})
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getCoach(@ApiParam(value = "ID of coach", required = true) @PathParam("coachId") String coachId) {
+    public Response getCoach(@ApiParam(value = "ID of coach", required = true) @PathParam("coachId") @NotBlank String coachId) {
         if(coachesCollection.isCoachExists(coachId)) {
             return Response.status(Response.Status.OK).entity(coachesCollection.getCoach(coachId)).build();
         }
@@ -58,7 +61,7 @@ public class CoachesResource {
 	})
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response postCoach(@ApiParam(value = "coach") Coach coach) {
+    public Response postCoach(@ApiParam(value = "coach") @Valid Coach coach) {
         if(!coachesCollection.isCoachExists(coach.getId())) {
             coachesCollection.addCoach(coach);
             return Response.status(Response.Status.CREATED).entity(coach).build();
@@ -75,7 +78,7 @@ public class CoachesResource {
 	})
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response putCoach(@ApiParam(value = "ID of coach", required = true) @PathParam("coachId") String coachId, Coach coach) {
+    public Response putCoach(@ApiParam(value = "ID of coach", required = true) @PathParam("coachId") @NotBlank String coachId, @Valid Coach coach) {
         if(coachesCollection.isCoachExists(coachId)) {
             coachesCollection.modifyCoach(coachId, coach);
             return Response.status(Response.Status.CREATED).entity(coach).build();
@@ -90,7 +93,7 @@ public class CoachesResource {
 			@ApiResponse(code = 204, message = "coach deleted"),
 			@ApiResponse(code = 409, message = "coach with given ID doesn't exist")
 	})
-    public Response deleteCoach(@ApiParam(value = "ID of coach", required = true) @PathParam("coachId") String coachId) {
+    public Response deleteCoach(@ApiParam(value = "ID of coach", required = true) @PathParam("coachId") @NotBlank String coachId) {
         if(coachesCollection.isCoachExists(coachId)) {
             coachesCollection.removeCoach(coachId);
             return Response.status(Response.Status.NO_CONTENT).build();

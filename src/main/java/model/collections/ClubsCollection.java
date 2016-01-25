@@ -12,7 +12,11 @@ public class ClubsCollection {
 	public ClubsCollection() {
 		clubsMap = new HashMap<>();
 		
-		addClub(new Club("123", "Real", "Madryt", 1902));
+		addClub(new Club("4578f5e0-c37f-11e5-9912-ba0be0483c18", "Real", "Madryt", 1902, "5485d32e-c37e-11e5-9912-ba0be0483c18"));
+		addClub(new Club("a63f7142-c37f-11e5-9912-ba0be0483c18", "Arsenal", "Londyn", 1886, "6221e4a8-c380-11e5-9912-ba0be0483c18"));
+		addClub(new Club("acc97b70-c37f-11e5-9912-ba0be0483c18", "Manchester United", "Manchester", 1878, "445846b2-c37e-11e5-9912-ba0be0483c18"));
+		addClub(new Club("b1b3e5f8-c37f-11e5-9912-ba0be0483c18", "Bayern", "Monachium", 1900));
+		addClub(new Club("b748c966-c37f-11e5-9912-ba0be0483c18", "Lech", "Poznań", 1922));
 	}
 	
 	public Map<String, Club> getClubs() {
