@@ -43,14 +43,14 @@ public class ClubsResource {
     @ApiOperation(value = "shows club with given ID")
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "club with given ID exists"),
-			@ApiResponse(code = 409, message = "club with given ID doesn't exist")
+			@ApiResponse(code = 404, message = "club with given ID doesn't exist")
 	})
     @Produces(MediaType.APPLICATION_JSON)
     public Response getClub(@ApiParam(value = "ID of club", required = true) @PathParam("clubId") @NotBlank String clubId) {
         if(clubsCollection.isClubExists(clubId)) {
             return Response.status(Response.Status.OK).entity(clubsCollection.getClub(clubId)).build();
         }
-        return Response.status(Response.Status.CONFLICT).entity("klub o podanym ID nie istnieje").build();
+        return Response.status(Response.Status.NOT_FOUND).entity("klub o podanym ID nie istnieje").build();
     }
     
     @Path("/{clubId}/players")
@@ -58,14 +58,14 @@ public class ClubsResource {
     @ApiOperation(value = "shows players which are in club with given ID")
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "club with given ID exists"),
-			@ApiResponse(code = 409, message = "club with given ID doesn't exist")
+			@ApiResponse(code = 404, message = "club with given ID doesn't exist")
 	})
     @Produces(MediaType.APPLICATION_JSON)
     public Response getClubPlayers(@ApiParam(value = "ID of club", required = true) @PathParam("clubId") @NotBlank String clubId) {
         if(clubsCollection.isClubExists(clubId)) {
             return Response.status(Response.Status.OK).entity(PlayersResource.getPlayersCollection().getPlayersByClub(clubId)).build();
         }
-        return Response.status(Response.Status.CONFLICT).entity("klub o podanym ID nie istnieje").build();
+        return Response.status(Response.Status.NOT_FOUND).entity("klub o podanym ID nie istnieje").build();
     }
     
     @POST
@@ -89,7 +89,7 @@ public class ClubsResource {
     @ApiOperation(value = "changes club with given ID")
 	@ApiResponses(value = {
 			@ApiResponse(code = 201, message = "club changed"),
-			@ApiResponse(code = 409, message = "club with given ID doesn't exist")
+			@ApiResponse(code = 404, message = "club with given ID doesn't exist")
 	})
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -98,7 +98,7 @@ public class ClubsResource {
             clubsCollection.modifyClub(clubId, club);
             return Response.status(Response.Status.CREATED).entity(club).build();
         }
-        return Response.status(Response.Status.CONFLICT).entity("klub o podanym ID nie istnieje").build();
+        return Response.status(Response.Status.NOT_FOUND).entity("klub o podanym ID nie istnieje").build();
     }
     
     @Path("/{clubId}")
@@ -106,14 +106,14 @@ public class ClubsResource {
     @ApiOperation(value = "deletes club with given ID from list")
     @ApiResponses(value = {
             @ApiResponse(code = 204, message = "club deleted"),
-            @ApiResponse(code = 409, message = "club with given ID doesn't exist")
+            @ApiResponse(code = 404, message = "club with given ID doesn't exist")
     })
     public Response deleteClub(@ApiParam(value = "ID of club", required = true) @PathParam("clubId") @NotBlank String clubId) {
         if(clubsCollection.isClubExists(clubId)) {
             clubsCollection.removeClub(clubId);
             return Response.status(Response.Status.NO_CONTENT).build();
         }
-        return Response.status(Response.Status.CONFLICT).entity("klub o podanym ID nie istnieje").build();
+        return Response.status(Response.Status.NOT_FOUND).entity("klub o podanym ID nie istnieje").build();
     }
     
 }

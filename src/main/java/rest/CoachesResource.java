@@ -43,14 +43,14 @@ public class CoachesResource {
     @ApiOperation(value = "shows coach with given ID")
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "coach with given ID exists"),
-			@ApiResponse(code = 409, message = "coach with given ID doesn't exist")
+			@ApiResponse(code = 404, message = "coach with given ID doesn't exist")
 	})
     @Produces(MediaType.APPLICATION_JSON)
     public Response getCoach(@ApiParam(value = "ID of coach", required = true) @PathParam("coachId") @NotBlank String coachId) {
         if(coachesCollection.isCoachExists(coachId)) {
             return Response.status(Response.Status.OK).entity(coachesCollection.getCoach(coachId)).build();
         }
-        return Response.status(Response.Status.CONFLICT).entity("trener o podanym ID nie istnieje").build();
+        return Response.status(Response.Status.NOT_FOUND).entity("trener o podanym ID nie istnieje").build();
     }
     
     @POST
@@ -74,7 +74,7 @@ public class CoachesResource {
     @ApiOperation(value = "changes coach with given ID")
 	@ApiResponses(value = {
 			@ApiResponse(code = 201, message = "coach changed"),
-			@ApiResponse(code = 409, message = "coach with given ID doesn't exist")
+			@ApiResponse(code = 404, message = "coach with given ID doesn't exist")
 	})
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -83,7 +83,7 @@ public class CoachesResource {
             coachesCollection.modifyCoach(coachId, coach);
             return Response.status(Response.Status.CREATED).entity(coach).build();
         }
-        return Response.status(Response.Status.CONFLICT).entity("trener o podanym ID nie istnieje").build();
+        return Response.status(Response.Status.NOT_FOUND).entity("trener o podanym ID nie istnieje").build();
     }
     
     @Path("/{coachId}")
@@ -91,14 +91,14 @@ public class CoachesResource {
     @ApiOperation(value = "deletes coach with given ID from list")
 	@ApiResponses(value = {
 			@ApiResponse(code = 204, message = "coach deleted"),
-			@ApiResponse(code = 409, message = "coach with given ID doesn't exist")
+			@ApiResponse(code = 404, message = "coach with given ID doesn't exist")
 	})
     public Response deleteCoach(@ApiParam(value = "ID of coach", required = true) @PathParam("coachId") @NotBlank String coachId) {
         if(coachesCollection.isCoachExists(coachId)) {
             coachesCollection.removeCoach(coachId);
             return Response.status(Response.Status.NO_CONTENT).build();
         }
-        return Response.status(Response.Status.CONFLICT).entity("trener o podanym ID nie istnieje").build();
+        return Response.status(Response.Status.NOT_FOUND).entity("trener o podanym ID nie istnieje").build();
     }
     
 }

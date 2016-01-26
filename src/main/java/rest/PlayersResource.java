@@ -47,14 +47,14 @@ public class PlayersResource {
 	@ApiOperation(value = "shows player with given ID")
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "player with given ID exists"),
-			@ApiResponse(code = 409, message = "player with given ID doesn't exist")
+			@ApiResponse(code = 404, message = "player with given ID doesn't exist")
 	})
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getPlayer(@ApiParam(value = "ID of player", required = true) @PathParam("playerId") @NotBlank String playerId) {
 		if(playersCollection.isPlayerExists(playerId)) {
 			return Response.status(Response.Status.OK).entity(playersCollection.getPlayer(playerId)).build();
 		}
-		return Response.status(Response.Status.CONFLICT).entity("zawodnik o podanym ID nie istnieje").build();
+		return Response.status(Response.Status.NOT_FOUND).entity("zawodnik o podanym ID nie istnieje").build();
 	}
 	
 	@POST
@@ -78,7 +78,7 @@ public class PlayersResource {
 	@ApiOperation(value = "changes player with given ID")
 	@ApiResponses(value = {
 			@ApiResponse(code = 201, message = "player changed"),
-			@ApiResponse(code = 409, message = "player with given ID doesn't exist")
+			@ApiResponse(code = 404, message = "player with given ID doesn't exist")
 	})
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
@@ -87,7 +87,7 @@ public class PlayersResource {
 			playersCollection.modifyPlayer(playerId, player);
 			return Response.status(Response.Status.CREATED).entity(player).build();
 		}
-		return Response.status(Response.Status.CONFLICT).entity("zawodnik o podanym ID nie istnieje").build();
+		return Response.status(Response.Status.NOT_FOUND).entity("zawodnik o podanym ID nie istnieje").build();
 	}
 	
 	@Path("/{playerId}")
@@ -95,14 +95,14 @@ public class PlayersResource {
 	@ApiOperation(value = "deletes player with given ID from list")
 	@ApiResponses(value = {
 			@ApiResponse(code = 204, message = "player deleted"),
-			@ApiResponse(code = 409, message = "player with given ID doesn't exist")
+			@ApiResponse(code = 404, message = "player with given ID doesn't exist")
 	})
 	public Response deletePlayer(@ApiParam(value = "ID of player", required = true) @PathParam("playerId") @NotBlank String playerId) {
 		if(playersCollection.isPlayerExists(playerId)) {
 			playersCollection.removePlayer(playerId);
 			return Response.status(Response.Status.NO_CONTENT).build();
 		}
-		return Response.status(Response.Status.CONFLICT).entity("zawodnik o podanym ID nie istnieje").build();
+		return Response.status(Response.Status.NOT_FOUND).entity("zawodnik o podanym ID nie istnieje").build();
 	}
 	
 }
