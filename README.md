@@ -1,7 +1,7 @@
-###cURL
+### cURL
 
 
-#####polecenia
+##### polecenia
 
 GET
 
@@ -58,7 +58,7 @@ http://localhost:8080/players/123
 ```
 
 
-#####parametry w poleceniach
+##### parametry w poleceniach
 
 ```
 --include	==	 -i
